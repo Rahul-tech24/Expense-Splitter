@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import userRoutes from './routes/user.route.js';
 import groupRoutes from './routes/groupRoutes.js';
+import expenseRoutes from './routes/expense.route.js';
 
 dotenv.config();
 
@@ -23,7 +24,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/groups', groupRoutes);
-
+app.use('/api/expenses', expenseRoutes);
 
 
 app.listen(PORT, () => {

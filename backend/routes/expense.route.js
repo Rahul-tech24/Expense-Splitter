@@ -6,7 +6,7 @@ const router = express.Router();
 
 // The :groupId in the URL is what req.params.groupId grabs!
 router.post('/:groupId', protect, addExpense);
-router.get('/:groupId/settlements', protect, getSettlements);
+router.get('/:groupId/settle', protect, getSettlements);
 router.get('/:groupId', protect, getGroupExpenses);
 
 export default router;

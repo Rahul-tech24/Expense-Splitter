@@ -59,7 +59,7 @@ const getGroupExpenses = asyncHandler(async (req, res) => {
 
 const getSettlements = asyncHandler(async (req, res) => {
     const groupId = req.params.groupId;
-    const group = await Group.findById(groupId);
+    const group = await Group.findById(groupId).populate('members', 'name');
     if (!group) {
         res.status(404);
         throw new Error('Group not found');
@@ -90,6 +90,11 @@ const getSettlements = asyncHandler(async (req, res) => {
         });
     });
 
+    const memberMap = {};
+    group.members.forEach((member) => {
+        memberMap[member._id.toString()] = member.name;
+    });
+
     const transactions = [];
 
    let debtors = [];
@@ -113,9 +118,11 @@ const getSettlements = asyncHandler(async (req, res) => {
 
         const payment = Math.min(debtor.amount, creditor.amount);
 
-        transactions.push({
+       transactions.push({
             from: debtor.userId,
+            fromName: memberMap[debtor.userId],
             to: creditor.userId,
+            toName: memberMap[creditor.userId],
             amount: payment
         });
 

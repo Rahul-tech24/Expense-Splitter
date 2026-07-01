@@ -19,7 +19,7 @@ const Dashboard = () => {
     const fetchGroups = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('http://localhost:5000/api/groups', config);
+        const { data } = await axios.get('https://expense-splitter-8fkw.onrender.com/api/groups', config);
         setGroups(data);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);

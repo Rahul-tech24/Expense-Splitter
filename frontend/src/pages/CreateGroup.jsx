@@ -17,7 +17,7 @@ const CreateGroup = () => {
     setIsLoading(true);
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.post('http://localhost:5000/api/groups', { name }, config);
+      const { data } = await axios.post('https://expense-splitter-8fkw.onrender.com/api/groups', { name }, config);
       navigate(`/groups/${data._id}`); // Instantly redirect to the new group's page!
     } catch (error) {
       console.error('Error creating group:', error);

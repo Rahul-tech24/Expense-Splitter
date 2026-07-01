@@ -22,8 +22,8 @@ const GroupPage = () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
         
-        const expenseRes = await axios.get(`http://localhost:5000/api/expenses/${groupId}`, config);
-        const settlementRes = await axios.get(`http://localhost:5000/api/expenses/${groupId}/settle`, config); // Fixed endpoint from 'settlements' to 'settle' based on your backend route
+        const expenseRes = await axios.get(`https://expense-splitter-8fkw.onrender.com/api/expenses/${groupId}`, config);
+        const settlementRes = await axios.get(`https://expense-splitter-8fkw.onrender.com/api/expenses/${groupId}/settle`, config); // Fixed endpoint from 'settlements' to 'settle' based on your backend route
 
         setExpenses(expenseRes.data);
         setSettlements(settlementRes.data);

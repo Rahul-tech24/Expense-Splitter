@@ -14,7 +14,7 @@ const Register = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/register', { name, email, password });
+      const response = await axios.post('https://expense-splitter-8fkw.onrender.com/api/users/register', { name, email, password });
       login(response.data); 
       navigate('/dashboard');
     } catch (error) {
@@ -23,6 +23,7 @@ const Register = () => {
     }
   }
 
+  
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-slate-100 p-8">

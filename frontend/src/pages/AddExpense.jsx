@@ -19,7 +19,7 @@ const AddExpense = () => {
     const fetchGroup = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('http://localhost:5000/api/groups', config);
+        const { data } = await axios.get('https://expense-splitter-8fkw.onrender.com/api/groups', config);
         const currentGroup = data.find(g => g._id === groupId);
         setGroup(currentGroup);
       } catch (error) {
@@ -45,7 +45,7 @@ const AddExpense = () => {
         splitAmong: group.members.map(member => member._id || member) 
       };
 
-      await axios.post(`http://localhost:5000/api/expenses/${groupId}`, expenseData, config);
+      await axios.post(`https://expense-splitter-8fkw.onrender.com/${groupId}`, expenseData, config);
       navigate(`/groups/${groupId}`); // Send them back to the group arena
     } catch (error) {
       console.error('Error adding expense:', error);

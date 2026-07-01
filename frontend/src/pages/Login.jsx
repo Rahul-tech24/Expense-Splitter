@@ -14,7 +14,7 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', { email, password });
+      const response = await axios.post('https://expense-splitter-8fkw.onrender.com/api/users/login', { email, password });
       login(response.data);
       navigate('/dashboard');
     } catch (error) {

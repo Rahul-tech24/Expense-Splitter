@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useAuthStore from '../store/authStore';
 import { ArrowLeft, Plus, UserPlus } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import axiosInstance from '../api/axios.js';
 
 const GroupPage = () => {
   const { groupId } = useParams();
@@ -23,8 +23,8 @@ const GroupPage = () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
         
-        const expenseRes = await axios.get(`https://expense-splitter-8fkw.onrender.com/api/expenses/${groupId}`, config);
-        const settlementRes = await axios.get(`https://expense-splitter-8fkw.onrender.com/api/expenses/${groupId}/settle`, config); // Fixed endpoint from 'settlements' to 'settle' based on your backend route
+        const expenseRes = await axiosInstance.get(`/api/expenses/${groupId}`, config);
+        const settlementRes = await axiosInstance.get(`/api/expenses/${groupId}/settle`, config); // Fixed endpoint from 'settlements' to 'settle' based on your backend route
 
         setExpenses(expenseRes.data);
         setSettlements(settlementRes.data);

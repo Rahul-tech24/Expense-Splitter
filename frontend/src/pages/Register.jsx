@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useAuthStore from '../store/authStore.js';
 import { toast} from 'react-hot-toast';
-
+import axiosInstance from '../api/axios.js';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -16,7 +15,7 @@ const Register = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('https://expense-splitter-8fkw.onrender.com/api/users/register', { name, email, password });
+      const response = await axiosInstance.post('/api/users/register', { name, email, password });
       login(response.data); 
       navigate('/dashboard');
     } catch (error) {

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import useAuthStore from '../store/authStore';
 import { ArrowLeft, Users } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import axiosInstance from '../api/axios.js';
 
 const CreateGroup = () => {
   const [name, setName] = useState('');
@@ -18,7 +18,7 @@ const CreateGroup = () => {
     setIsLoading(true);
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const { data } = await axios.post('https://expense-splitter-8fkw.onrender.com/api/groups', { name }, config);
+      const { data } = await axiosInstance.post('/api/groups', { name }, config);
       navigate(`/groups/${data._id}`); // Instantly redirect to the new group's page!
     } catch (error) {
       console.error('Error creating group:', error);

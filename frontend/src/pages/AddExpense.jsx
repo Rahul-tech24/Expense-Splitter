@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+
 import useAuthStore from '../store/authStore';
 import { ArrowLeft, Receipt } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import axiosInstance from '../api/axios.js';
 
 const AddExpense = () => {
 
@@ -22,7 +23,7 @@ const AddExpense = () => {
     const fetchGroup = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('https://expense-splitter-8fkw.onrender.com/api/groups', config);
+        const { data } = await axiosInstance.get('/api/groups', config);
         const currentGroup = data.find(g => g._id === groupId);
         setGroup(currentGroup);
       } catch (error) {
@@ -51,7 +52,7 @@ const AddExpense = () => {
         splitAmong: group.members.map(member => member._id || member) 
       };
 
-      await axios.post(`https://expense-splitter-8fkw.onrender.com/api/expenses/${groupId}`, expenseData, config);
+      await axiosInstance.post(`/api/expenses/${groupId}`, expenseData, config);
       navigate(`/groups/${groupId}`); // Send them back to the group arena
     } catch (error) {
       console.error('Error adding expense:', error);

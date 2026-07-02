@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
 import useAuthStore from '../store/authStore.js';
 import { Wallet } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import axiosInstance from '../api/axios.js';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const response = await axios.post('https://expense-splitter-8fkw.onrender.com/api/users/login', { email, password });
+      const response = await axiosInstance.post('/api/users/login', { email, password });
       login(response.data);
       navigate('/dashboard');
     } catch (error) {

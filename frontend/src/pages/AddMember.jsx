@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import axios from 'axios';
 import useAuthStore from '../store/authStore.js';
 import { ArrowLeft, UserPlus } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import axiosInstance from '../api/axios.js';
 
 const AddMember = () => {
   const { groupId } = useParams();
@@ -22,7 +22,7 @@ const AddMember = () => {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
       
       // Hit the endpoint you built on Day 5!
-      await axios.post(`https://expense-splitter-8fkw.onrender.com/api/groups/${groupId}/members`, { email }, config);
+      await axiosInstance.post(`/api/groups/${groupId}/members`, { email }, config);
       
       navigate(`/groups/${groupId}`); // Send them back to the group arena
     } catch (error) {

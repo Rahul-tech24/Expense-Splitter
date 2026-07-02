@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useAuthStore from '../store/authStore';
 import { Wallet, LogOut, Plus, Users } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import axiosInstance from '../api/axios.js';
 
 const Dashboard = () => {
   const [groups, setGroups] = useState([]);
@@ -20,7 +20,7 @@ const Dashboard = () => {
     const fetchGroups = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${user.token}` } };
-        const { data } = await axios.get('https://expense-splitter-8fkw.onrender.com/api/groups', config);
+        const { data } = await axiosInstance.get('/api/groups', config);
         setGroups(data);
       } catch (error) {
         toast.error(error.response?.data?.message || 'Failed to fetch dashboard data');

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useAuthStore from '../store/authStore.js';
 import { Wallet } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ const Login = () => {
       login(response.data);
       navigate('/dashboard');
     } catch (error) {
-      alert(error.response?.data?.message || 'Login failed');
+      toast.error(error.response?.data?.message || 'Login failed');
       console.error('Login failed:', error.response ? error.response.data : error.message);
     }
   }

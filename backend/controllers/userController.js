@@ -8,7 +8,12 @@ import generateToken from '../utils/generateToken.js';
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
-// Check if user already exists
+    // Check if user already exists
+    
+    if (!name || !email || !password) {
+        res.status(400);
+        throw new Error('Please provide all required fields');
+    }
     
     const userExists = await User.findOne({ email });
 
@@ -41,7 +46,23 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+        res.status(400);
+        throw new Error('Please provide both email and password');
+    }
+
     const user = await User.findOne({ email });
+
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+
+    if (!await user.matchPassword(password)) {
+        res.status(401);
+        throw new Error('Invalid email or password');
+    }
 
     if (user && (await user.matchPassword(password))) {
         res.json({

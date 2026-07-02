@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useAuthStore from '../store/authStore.js';
+import { toast} from 'react-hot-toast';
+
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -18,7 +20,7 @@ const Register = () => {
       login(response.data); 
       navigate('/dashboard');
     } catch (error) {
-      alert(error.response?.data?.message || 'Registration failed');
+      toast.error(error.response?.data?.message || 'Registration failed');
       console.error('Registration failed:', error);
     }
   }

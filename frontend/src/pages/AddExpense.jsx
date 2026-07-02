@@ -3,8 +3,10 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import useAuthStore from '../store/authStore';
 import { ArrowLeft, Receipt } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const AddExpense = () => {
+
   const { groupId } = useParams();
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -12,6 +14,7 @@ const AddExpense = () => {
   const [isLoading, setIsLoading] = useState(false);
   
   const user = useAuthStore((state) => state.user);
+  
   const navigate = useNavigate();
 
   // We need to fetch the group details so we know who is in it!
@@ -23,11 +26,14 @@ const AddExpense = () => {
         const currentGroup = data.find(g => g._id === groupId);
         setGroup(currentGroup);
       } catch (error) {
+        toast.error(error.response?.data?.message || 'Failed to fetch group details');
         console.error('Error fetching group details:', error);
       }
+
     };
     if (user) fetchGroup();
   }, [user, groupId]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,11 +51,11 @@ const AddExpense = () => {
         splitAmong: group.members.map(member => member._id || member) 
       };
 
-      await axios.post(`https://expense-splitter-8fkw.onrender.com/${groupId}`, expenseData, config);
+      await axios.post(`https://expense-splitter-8fkw.onrender.com/api/expenses/${groupId}`, expenseData, config);
       navigate(`/groups/${groupId}`); // Send them back to the group arena
     } catch (error) {
       console.error('Error adding expense:', error);
-      alert(error.response?.data?.message || 'Failed to add expense');
+      toast.error(error.response?.data?.message || 'Failed to add expense');
     } finally {
       setIsLoading(false);
     }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useAuthStore from '../store/authStore';
 import { Wallet, LogOut, Plus, Users } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const Dashboard = () => {
   const [groups, setGroups] = useState([]);
@@ -22,6 +23,7 @@ const Dashboard = () => {
         const { data } = await axios.get('https://expense-splitter-8fkw.onrender.com/api/groups', config);
         setGroups(data);
       } catch (error) {
+        toast.error(error.response?.data?.message || 'Failed to fetch dashboard data');
         console.error('Error fetching dashboard data:', error);
       }
     };

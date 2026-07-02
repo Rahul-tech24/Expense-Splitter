@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useAuthStore from '../store/authStore';
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft, Plus, UserPlus } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const GroupPage = () => {
   const { groupId } = useParams();
@@ -28,6 +29,7 @@ const GroupPage = () => {
         setExpenses(expenseRes.data);
         setSettlements(settlementRes.data);
       } catch (error) {
+        toast.error(error.response?.data?.message || 'Failed to fetch group data');
         console.error('Error fetching group data:', error);
       }
     };
@@ -57,6 +59,10 @@ const GroupPage = () => {
               <h2 className="text-2xl font-bold text-slate-900">Recent Expenses</h2>
               <Link to={`/groups/${groupId}/add-expense`} className="bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-indigo-700 transition shadow-sm flex items-center gap-2">
   <Plus size={16} /> Add Expense
+              </Link>
+              
+                  <Link to={`/groups/${groupId}/add-member`} className="bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-green-700 transition shadow-sm flex items-center gap-2">
+  <UserPlus size={16} /> Add Member
 </Link>
             </div>
             

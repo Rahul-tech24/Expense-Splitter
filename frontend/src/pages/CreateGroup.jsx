@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import useAuthStore from '../store/authStore';
 import { ArrowLeft, Users } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const CreateGroup = () => {
   const [name, setName] = useState('');
@@ -21,7 +22,7 @@ const CreateGroup = () => {
       navigate(`/groups/${data._id}`); // Instantly redirect to the new group's page!
     } catch (error) {
       console.error('Error creating group:', error);
-      alert(error.response?.data?.message || 'Failed to create group');
+      toast.error(error.response?.data?.message || 'Failed to create group');
     } finally {
       setIsLoading(false);
     }

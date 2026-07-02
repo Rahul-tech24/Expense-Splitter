@@ -8,11 +8,17 @@ import GroupPage from './pages/GroupPage.jsx';
 import Landing from './pages/Landing.jsx';
 import CreateGroup from './pages/CreateGroup.jsx';
 import AddExpense from './pages/AddExpense.jsx';
+import AddMember from './pages/AddMember.jsx';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
  
 
   return (
+
+    <>
+    <Toaster />
+
     <BrowserRouter>
       
     <Routes>
@@ -26,12 +32,15 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/groups/:groupId" element={<GroupPage />} />
        <Route path="/create-group" element={<CreateGroup />} />
-<Route path="/groups/:groupId/add-expense" element={<AddExpense />} />
+        <Route path="/groups/:groupId/add-expense" element={<AddExpense />} />
+        <Route path="/groups/:groupId/add-member" element={<AddMember />} />
 
 
     </Routes>
       
-    </BrowserRouter>
+      </BrowserRouter>
+      
+      </>
   )
 }
 

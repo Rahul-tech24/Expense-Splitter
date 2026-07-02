@@ -11,7 +11,7 @@ const registerUser = asyncHandler(async (req, res) => {
     // Check if user already exists
     
     if (!name || !email || !password) {
-        res.status(400);
+        res.status(400 ).response.json({ message: 'Please provide all required fields' });
         throw new Error('Please provide all required fields');
     }
     
@@ -48,19 +48,19 @@ const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        res.status(400);
+        res.status(400).json({ message: 'Please provide both email and password' });
         throw new Error('Please provide both email and password');
     }
 
     const user = await User.findOne({ email });
 
     if (!user) {
-        res.status(404);
+        res.status(404).json({ message: 'User not found' });
         throw new Error('User not found');
     }
 
     if (!await user.matchPassword(password)) {
-        res.status(401);
+        res.status(401).json({ message: 'Invalid email or password' });
         throw new Error('Invalid email or password');
     }
 
@@ -72,7 +72,7 @@ const loginUser = asyncHandler(async (req, res) => {
             token: generateToken(user._id)
         });
     } else {
-        res.status(401);
+        res.status(401).json({ message: 'Invalid email or password' });
         throw new Error('Invalid email or password');
     }
 });

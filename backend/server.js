@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import userRoutes from './routes/user.route.js';
 import groupRoutes from './routes/groupRoutes.js';
 import expenseRoutes from './routes/expense.route.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 dotenv.config();
 
@@ -45,6 +46,9 @@ app.get('/api/health', (req, res) => {
 app.use('/api/users', userRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/expenses', expenseRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 
 app.listen(PORT, () => {
